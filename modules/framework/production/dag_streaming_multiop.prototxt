@@ -1,0 +1,81 @@
+# sequence example
+# only one trigger for each frame
+op {
+    name: 'Test1'
+    type: 'TestOperator'
+    priority: -9
+    algorithm: 'TestOp2'
+    config: 'test.prototxt'
+    trigger: 'lidar_tracking'
+    output {
+        event: 'test1'
+        type: 'ApplicationCachedData'
+    }
+}
+
+op {
+    name: 'Test2'
+    priority: -10
+    group {
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp2'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp3'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp2'
+            config: 'test.prototxt'
+        }
+    }
+    trigger: 'test1'
+    output {
+        event: 'test2'
+        type: 'ApplicationCachedData'
+    }
+}
+
+op {
+    name: 'Test3'
+    priority: -10
+    group {
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+    }
+    trigger: 'test2'
+    output {
+        event: 'test3'
+    }
+}
+
+op {
+    name: 'Test4'
+    priority: -10
+    algorithm: 'TestOp2'
+    config: 'test.prototxt'
+    trigger: 'test3'
+}

@@ -1,0 +1,4 @@
+packages:
+  - name: crdc_airi_apollo_cyber
+    url: http://10.10.173.10/release/crdc_airi_apollo_cyber/
+    version: apollo_cyber

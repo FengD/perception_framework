@@ -1,0 +1,98 @@
+# sequence example
+# only one trigger for each frame
+op {
+    name: 'Test1'
+    type: 'TestOperator'
+    priority: -9
+    algorithm: 'TestOp2'
+    config: 'test.prototxt'
+    trigger: 'lidar_tracking'
+    output {
+        event: 'test1'
+        type: 'ApplicationCachedData'
+    }
+}
+
+op {
+    name: 'Test5'
+    type: 'TestOperator'
+    priority: -9
+    algorithm: 'TestOp3'
+    config: 'test.prototxt'
+    trigger: 'lidar_tracking'
+    output {
+        event: 'test5'
+        type: 'ApplicationCachedData'
+    }
+}
+
+op {
+    name: 'Test2'
+    priority: -10
+    group {
+        op {
+            algorithm: 'TestOp'
+            param {
+                 name: 'haha'
+                 s: 'hahah'
+            }
+            param {
+                 name: 'hehe'
+                 b: false
+            }
+            param {
+                 name: 'xixi'
+                 f: 0.0
+            }
+            config: 'test.prototxt'
+        }
+    }
+    trigger: 'test1'
+    output {
+        event: 'test2'
+        type: 'ApplicationCachedData'
+    }
+}
+
+op {
+    name: 'Test3'
+    priority: -10
+    group {
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+        op {
+            algorithm: 'TestOp'
+            config: 'test.prototxt'
+        }
+    }
+    input: 'test5'
+    input_offset: 1
+    input_window: 2
+    input_wait: 0
+    input: 'test6'
+    input_offset: 1
+    input_window: 2
+    input_wait: 0
+    input: 'test7'
+    input_offset: 1
+    input_window: 2
+    input_wait: 0
+    trigger: 'test2'
+    output {
+        event: 'test3'
+    }
+}
+
+op {
+    name: 'Test4'
+    priority: -10
+    algorithm: 'TestOp2'
+    config: 'test.prototxt'
+    trigger: 'test3'
+}

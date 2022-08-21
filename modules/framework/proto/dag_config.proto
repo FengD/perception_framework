@@ -1,0 +1,102 @@
+syntax = "proto2";
+
+import public "type.proto";
+package crdc.airi;
+
+message OperatorDependency {
+    required string name = 1;
+    enum DependencyPolicy {
+        BYPASS = 0;
+        BLOCK = 1;
+        WAIT = 2;
+        BUNDLE = 3;
+    }
+    optional DependencyPolicy policy = 2 [default = WAIT];
+    optional int32 wait_time = 3 [default = 5];
+}
+
+message OperatorOutput {
+    optional string event = 1;
+    optional string data = 2;
+    optional string type = 3;
+    optional int32 hz = 4;
+
+    // internal use only
+    message Downstream {
+        optional int32 op_id = 1;
+        optional int32 trigger_id = 2;
+        optional string data = 3;
+        optional string type = 4;
+        optional string event = 5;
+        optional int32 hz = 6;
+    }
+    repeated Downstream downstream = 11;
+
+    optional bool has_reference = 21 [default = false];
+    repeated string reference = 22;
+}
+
+message OpConfig {
+    required string algorithm = 1;
+    repeated AnyParam param = 2;
+    optional string config = 3;
+    optional bool bypass = 11 [default = false];
+    optional string bypass_if = 21;
+    optional string enable_if = 22;
+    optional string disable_if = 23;
+}
+
+message OpGroupConfig {
+    repeated OpConfig op = 1;
+
+    message SeqGroupConfig {
+      optional bool ignore_fail = 1 [default = false];
+    }
+    optional SeqGroupConfig seq_config = 11;
+}
+
+message OperatorConfig {
+    required string name = 1;
+    optional string type = 2;
+    oneof op {
+      string algorithm = 3;
+      OpGroupConfig group = 4;
+    }
+    optional string config = 5;
+    repeated AnyParam param = 6;
+    optional bool bypass = 7;
+    repeated OperatorDependency dependency = 10;
+
+    repeated string trigger = 11;
+    repeated string transform = 12;
+    repeated OperatorOutput output = 14;
+
+    repeated string latest = 15;
+    repeated double latest_tolerate_offset = 16;
+
+    repeated string input = 21;
+    repeated double input_offset = 22;
+    repeated int32 input_window = 23;
+    repeated double input_wait = 24;
+
+    optional int32 priority = 25;
+
+    // Periodic Operator [deprecated]
+    optional bool self_driven = 31 [default = false];
+    optional float force_trigger = 32 [default = -1.0]; // uint: s
+
+    // enable/bypass from EnvVar
+    optional string bypass_if = 41;
+    optional string enable_if = 42;
+    optional string disable_if = 43;
+
+    // internal use
+    optional int32 id = 101;
+    optional OpType op_type= 102;
+    repeated string trigger_data = 103;
+    repeated int32 upstream = 104;
+}
+
+message DAGConfig {
+    repeated OperatorConfig op = 36;
+}
