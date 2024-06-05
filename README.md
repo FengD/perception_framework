@@ -46,4 +46,4 @@ Options:
 * If the build successed. use `execute.sh` in the `build_dist/build_dist/crdc_airi_common/bin/` to execute the app the default config is param `build_dist/crdc_airi_common/params/framework/production/dag_streaming.prototxt`
 * `tools/vis_perception_dag.py` could be used to generate `DAG picture`.
 * ![dag](modules/framework/tools/test.png). 
-* Use command `python vis_perception_dag.py -i [input_dag_file_path] -o [output_picture_file_path]` in the `ubuntu:18.04-hirain-inner`.
+* Use command `python vis_perception_dag.py -i [input_dag_file_path] -o [output_picture_file_path]`

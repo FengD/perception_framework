@@ -21,8 +21,5 @@ link_directories(
     ${DEPENDENCIES_PATH}/apollo/cyber/lib
 )
 
-add_subdirectory(communication)
 add_subdirectory(common)
-add_subdirectory(tools)
 add_subdirectory(framework)
-add_subdirectory(viewer)

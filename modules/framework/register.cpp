@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Hirain Technologies
+// Copyright (C) 2021 FengD
 // License: Modified BSD Software License Agreement
 // Author: Feng DING
 // Description: Register is used to registe all the useful class.

@@ -1,4 +1,4 @@
-// Copyright (C) 2021 Hirain Technologies
+// Copyright (C) 2021 FengD
 // License: Modified BSD Software License Agreement
 // Author: Feng DING
 // Description: Shared data manager. Like the name this class is used to manage the shared
